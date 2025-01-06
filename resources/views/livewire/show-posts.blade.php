@@ -15,12 +15,39 @@
                 <tr>
                     <th scope="col" class="cursor-pointer px-6 py-3" wire:click="order('id')">
                         ID
+                        @if($sort == 'id')
+                            @if($direction=='asc')
+                                <i class="fa-solid fa-sort-up"></i>
+                            @else
+                                <i class="fa-solid fa-sort-down"></i>
+                            @endif
+                        @else
+                            <i class="fa-solid fa-sort"></i>
+                        @endif
                     </th>
                     <th scope="col" class="cursor-pointer px-6 py-3" wire:click="order('title')">
                         Título
+                        @if($sort == 'title')
+                            @if($direction=='asc')
+                                <i class="fa-solid fa-sort-up"></i>
+                            @else
+                                <i class="fa-solid fa-sort-down"></i>
+                            @endif
+                        @else
+                            <i class="fa-solid fa-sort"></i>
+                        @endif
                     </th>
                     <th scope="col" class="cursor-pointer px-6 py-3" wire:click="order('content')">
                         Contenido
+                        @if($sort == 'content')
+                            @if($direction=='asc')
+                                <i class="fa-solid fa-sort-up"></i>
+                            @else
+                                <i class="fa-solid fa-sort-down"></i>
+                            @endif
+                        @else
+                            <i class="fa-solid fa-sort"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Acción
