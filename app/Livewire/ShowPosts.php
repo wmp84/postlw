@@ -3,14 +3,16 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowPosts extends Component
 {
     public $search;
     public $sort = 'id';
-    public $direction = 'asc';
+    public $direction = 'desc';
 
+    #[On("sav")]
     public function render()
     {
         $posts = Post::where('title', 'like', '%' . $this->search . '%')
@@ -31,7 +33,7 @@ class ShowPosts extends Component
             }
         } else {
             $this->sort = $sort;
-            $this->direction = 'asc';
+            $this->direction = 'desc';
         }
     }
 

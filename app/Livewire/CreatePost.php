@@ -16,6 +16,9 @@ class CreatePost extends Component
             'title' => $this->title,
             'content' => $this->content
         ]);
+        $this->reset(['open','title','content']);
+        $this->dispatch('sav');
+        $this->dispatch('alert','Post creado');
     }
 
     public function render()
