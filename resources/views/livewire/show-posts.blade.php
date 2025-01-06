@@ -5,13 +5,13 @@
         </h2>
     </x-slot>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
+        <div class="px-6 py-3 flex items-center">
+            <x-input type="text" class="flex-1 mr-4" wire:model="search" wire:keydown="mostrar"
+                     placeholder="Realizar búsqueda..."/>
+            @livewire('create-post')
+        </div>
         <x-table>
             <x-slot name="head">
-                <div class="px-6 py-3">
-                    <x-input type="text" class="w-full" wire:model="search" wire:keydown="mostrar"
-                             placeholder="Realizar búsqueda..."/>
-                </div>
                 <tr>
                     <th scope="col" class="cursor-pointer px-6 py-3" wire:click="order('id')">
                         ID
