@@ -9,7 +9,7 @@ class ShowPosts extends Component
 {
     public function render()
     {
-        $posts= Post::all();
+        $posts = Post::all();
         return view('livewire.show-posts', compact('posts'));
     }
 }
