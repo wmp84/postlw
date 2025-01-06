@@ -23,7 +23,7 @@
             <x-secondary-button wire:click="$set('open',false)">
                 Cancelar
             </x-secondary-button>
-            <x-button class="ml-2" wire:click="save">
+            <x-button class="ml-2 mr-1" wire:click="save" wire:loading.attr="disabled" wire:target="save">
                 Guardar
             </x-button>
         </x-slot>
