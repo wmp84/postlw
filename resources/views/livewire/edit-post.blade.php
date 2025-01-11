@@ -34,7 +34,7 @@
             </div>
         </x-slot>
         <x-slot name="footer">
-            <x-secondary-button wire:click="$set('open',false)">
+            <x-secondary-button wire:click="$set('open_edit',false)">
                 Cancelar
             </x-secondary-button>
             <x-button class="ml-2 mr-1" wire:click="save" wire:loading.attr="disabled" wire:target="save, image">

@@ -55,20 +55,22 @@
                 </tr>
             </x-slot>
             <x-slot name="body">
-                @forelse($posts as $post)
+                @forelse($posts as $item)
                     <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{$post->id}}
+                            {{$item->id}}
                         </th>
                         <td class="px-6 py-4">
-                            {{$post->title}}
+                            {{$item->title}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$post->content}}
+                            {{$item->content}}
                         </td>
                         <td class="px-6 py-4">
-                            @livewire('edit-post', ['post'=>$post], key($post->id))
+                            <a class="btn btn-green" wire:click="edit({{$item}})">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         </td>
                     </tr>
                 @empty
@@ -81,4 +83,45 @@
             </x-slot>
         </x-table>
     </div>
+
+    <x-dialog-modal wire:model="open_edit">
+        <x-slot name="title">
+            Editar
+        </x-slot>
+        <x-slot name="content">
+            <div wire:loading wire:target="image"
+                 class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                 role="alert">
+                <span class="font-medium">Cargando imagen</span> Espere hasta que la imagen se haya cargado...
+            </div>
+            @if($image)
+                <img class="mb-4" src="{{$image->temporaryUrl()}}" alt="">
+            @else
+                <img src="{{Storage::url($post->image)}}" alt="">
+            @endif
+            <div class="mb-4">
+                <x-label value="Título"/>
+                <x-input wire:model="postEdit.title" class="w-full"/>
+                <x-input-error for="postEdit.title"/>
+            </div>
+            <div class="mb-4">
+                <x-label value="Contenido"/>
+                <x-textarea wire:model="postEdit.content" class="w-full"/>
+                <x-input-error for="postEdit.content"/>
+            </div>
+            <div class="mb-4">
+                <input type="file" wire:model="image">
+                <x-input-error for="image"/>
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$set('open_edit',false)">
+                Cancelar
+            </x-secondary-button>
+            <x-button class="ml-2 mr-1" wire:click="saveUpdate" wire:loading.attr="disabled" wire:target="save, image">
+                Guardar
+            </x-button>
+        </x-slot>
+    </x-dialog-modal>
+
 </div>

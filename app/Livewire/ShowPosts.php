@@ -2,15 +2,27 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\editPost as FormsEditPost;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ShowPosts extends Component
 {
-    public $search;
+    use WithFileUploads;
+
+    public $search, $post, $image;
     public $sort = 'id';
     public $direction = 'desc';
+    public $open_edit = false;
+    public FormsEditPost $postEdit;
+
+    public function mount()
+    {
+        $this->post = new Post();
+    }
 
     #[On("sav")]
     public function render()
@@ -41,4 +53,27 @@ class ShowPosts extends Component
     {
     }
 
+    public function edit(Post $post)
+    {
+        $this->post = $post;
+        $this->postEdit->Id = $this->post->id;
+        $this->postEdit->title = $this->post->title;
+        $this->postEdit->content = $this->post->content;
+        $this->postEdit->image = $this->post->image;
+        $this->open_edit = true;
+    }
+
+    public function saveUpdate()
+    {
+        $this->validate();
+        if ($this->image) {
+            if (Storage::disk('public')->exists($this->postEdit->image)) {
+                Storage::disk('public')->delete($this->postEdit->image);
+            }
+            $this->postEdit->image = $this->image->store('posts', 'public');
+        }
+        $this->postEdit->updatePost();
+        $this->reset('open_edit', 'image');
+        $this->dispatch('alert', 'Post actualizado');
+    }
 }
