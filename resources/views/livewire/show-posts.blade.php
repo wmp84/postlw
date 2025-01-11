@@ -76,12 +76,17 @@
                 @empty
                     <td colspan="5" class="px-3 py-2">
                         <span class="px-3 py-2 text-red-500">
-                        No exiten registro o coincidencias de búsqueda
+                        No existen registros o coincidencias de búsqueda
                         </span>
                     </td>
                 @endforelse
             </x-slot>
         </x-table>
+        @if($posts->hasPages())
+            <div class="px-6 py-3">
+                {{$posts->links()}}
+            </div>
+        @endif
     </div>
 
     <x-dialog-modal wire:model="open_edit">

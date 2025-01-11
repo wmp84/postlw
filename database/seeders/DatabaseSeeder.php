@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('posts');
         Storage::makeDirectory('posts');
         User::factory(10)->create();
-        Post::factory(10)->create();
+        Post::factory(100)->create();
 
         /*User::factory()->create([
             'name' => 'Test User',
