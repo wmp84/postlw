@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -26,15 +27,15 @@ class CreatePost extends Component
 
     public function save()
     {
+
         $this->validate();
-        $image = $this->image->store('posts');
+        $image = $this->image->store('posts','public');
         Post::create([
             'title' => $this->title,
             'content' => $this->content,
             'image' => $image
         ]);
         $this->reset(['open', 'title', 'content', 'image']);
-        $this->identificador=rand();
         $this->dispatch('sav');
         $this->dispatch('alert', 'Post creado');
     }

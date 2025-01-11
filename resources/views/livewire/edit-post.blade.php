@@ -1,31 +1,35 @@
 <div>
-    <x-button wire:click="$set('open',true)">
-        Crear post
-    </x-button>
+    <a class="btn btn-green" wire:click="$set('open',true)">
+        <i class="fas fa-edit"></i>
+    </a>
 
     <x-dialog-modal wire:model="open">
         <x-slot name="title">
-            Crear nuevo post
+            Editar {{$post->title}}
         </x-slot>
         <x-slot name="content">
-            <div wire:loading wire:target="image" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <div wire:loading wire:target="image"
+                 class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                 role="alert">
                 <span class="font-medium">Cargando imagen</span> Espere hasta que la imagen se haya cargado...
             </div>
             @if($image)
                 <img class="mb-4" src="{{$image->temporaryUrl()}}" alt="">
+            @else
+                <img src="{{Storage::url($post->image)}}" alt="">
             @endif
             <div class="mb-4">
-                <x-label value="Título del post"/>
-                <x-input type="text" class="w-full" wire:model="title"/>
-                <x-input-error for="title"/>
+                <x-label value="Título"/>
+                <x-input wire:model="postEdit.title" class="w-full"/>
+                <x-input-error for="postEdit.title"/>
             </div>
             <div class="mb-4">
-                <x-label value="Descripción"/>
-                <x-textarea type="textarea" class="w-full" wire:model.defer="content"/>
-                <x-input-error for="content"/>
+                <x-label value="Contenido"/>
+                <x-textarea wire:model="postEdit.content" class="w-full"/>
+                <x-input-error for="postEdit.content"/>
             </div>
             <div class="mb-4">
-                <input type="file" wire:model="image" id="{{$identificador}}">
+                <input type="file" wire:model="image">
                 <x-input-error for="image"/>
             </div>
         </x-slot>
