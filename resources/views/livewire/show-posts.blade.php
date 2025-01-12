@@ -1,4 +1,5 @@
 <div>
+    <!--wire:init="loadPosts"-->
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -92,10 +93,14 @@
                 @endforelse
             </x-slot>
         </x-table>
-        @if($posts->hasPages())
-            <div class="px-6 py-3">
-                {{$posts->links()}}
-            </div>
+        @if(count($posts))
+            <tr>
+                @if($posts->hasPages())
+                    <div class="px-6 py-3">
+                        {{$posts->links()}}
+                    </div>
+                @endif
+            </tr>
         @endif
     </div>
 
