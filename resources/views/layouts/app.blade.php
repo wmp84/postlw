@@ -42,9 +42,9 @@
 @stack('modals')
 
 @livewireScripts
-
+@stack('js')
 <script>
-    Livewire.on('alert',function (message){
+    Livewire.on('alert', function (message) {
         Swal.fire({
             title: "Notición",
             text: message,

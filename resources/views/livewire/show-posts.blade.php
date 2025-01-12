@@ -78,9 +78,12 @@
                         <td class="px-6 py-4">
                             {{$item->content}}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 flex">
                             <a class="btn btn-green" wire:click="edit({{$item}})">
                                 <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-red ml-2" wire:click="$dispatch('deletePost',{{$item->id}})">
+                                <i class="fas fa-trash"></i>
                             </a>
                         </td>
                     </tr>
@@ -116,7 +119,7 @@
             </div>
             @if($image)
                 <img class="mb-4" src="{{$image->temporaryUrl()}}" alt="">
-            @else
+            @elseif($post->$image)
                 <img src="{{Storage::url($post->image)}}" alt="">
             @endif
             <div class="mb-4">
@@ -143,5 +146,32 @@
             </x-button>
         </x-slot>
     </x-dialog-modal>
+    @push('js')
+        <script src="sweetalert2.all.min.js"></script>
 
+        <script>
+            Livewire.on('deletePost', postId => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.dispatch('delete', postId);
+
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    }
+                });
+            });
+        </script>
+    @endpush
 </div>

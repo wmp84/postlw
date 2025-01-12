@@ -16,6 +16,7 @@ class ShowPosts extends Component
     use WithPagination;
 
     public $post, $image;
+    public $IdPost;
     public $search = '';
     public $sort = 'id';
     public $direction = 'desc';
@@ -44,10 +45,10 @@ class ShowPosts extends Component
     public function render()
     {
         //if ($this->readyToLoad) {
-            $posts = Post::where('title', 'like', '%' . $this->search . '%')
-                ->orWhere('content', 'like', '%' . $this->search . '%')
-                ->orderBy($this->sort, $this->direction)
-                ->paginate($this->cant);
+        $posts = Post::where('title', 'like', '%' . $this->search . '%')
+            ->orWhere('content', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sort, $this->direction)
+            ->paginate($this->cant);
         /*} else {
             $posts = [];
         }*/
@@ -99,5 +100,15 @@ class ShowPosts extends Component
         $this->postEdit->updatePost();
         $this->reset('open_edit', 'image');
         $this->dispatch('alert', 'Post actualizado');
+    }
+    #[On("delete")]
+    public function delete($id)
+    {
+        dd($id);
+        //$this->IdPost = $id;
+        $post = Post::find($this->Id);
+        $post->delete();
+        $this->reset("Id");
+        $this->dispatch("borrado", "Eliminado correctamente");
     }
 }
