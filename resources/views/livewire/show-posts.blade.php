@@ -6,7 +6,17 @@
     </x-slot>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="px-6 py-3 flex items-center">
-            <x-input type="text" class="flex-1 mr-4" wire:model="search" wire:keydown="mostrar"
+            <div class="flex items-center">
+                <x-label>Mostrar</x-label>
+                <x-select wire:model="cant" class="mx-2">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </x-select>
+                <x-label>entradas</x-label>
+            </div>
+            <x-input type="text" class="flex-1 mx-4" wire:model="search" wire:keydown="mostrar"
                      placeholder="Realizar búsqueda..."/>
             @livewire('create-post')
         </div>
